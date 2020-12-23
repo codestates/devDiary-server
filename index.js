@@ -28,6 +28,8 @@ app.use(express.json());
 // app.use(express.urlencoded({ extended: fales }));
 
 app.post("/user/signup", mainController.signUpController);
+app.post("/user/checkEmail", mainController.filteremail);
+app.post("/user/checkUsername", mainController.filterusername);
 
 if (process.env.NODE_ENV !== "test") {
 	app.listen(port, () => {
