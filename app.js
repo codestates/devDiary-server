@@ -12,6 +12,7 @@ app.use(cors());
 app.use(bodyParser.json());
 
 app.post('/diary/newPost', diaryController.newPost);
+app.post('/diary/updatePost', diaryController.updatePost);
 // app.use('/user', usersRouter);
 // app.use('/diary', diaryRouter);
 
