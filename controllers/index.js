@@ -8,13 +8,6 @@ module.exports = {
 		} else if (body.password.length < 6 || body.password.length > 12) {
 			res.status(400).send("resize password length");
 		} else {
-			// const userinfo = await User.findOne({
-			// 	where: {
-			// 		email: body.email,
-			// 		password: body.password,
-			// 		username: body.username,
-			// 	},
-			// });
 			const createuserinfo = await User.create({
 				email: body.email,
 				password: body.password,
