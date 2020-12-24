@@ -27,6 +27,7 @@ app.use(logger("dev"));
 app.use(express.json());
 // app.use(express.urlencoded({ extended: fales }));
 
+app.post("/user/login", mainController.login);
 app.post("/user/signup", mainController.signUpController);
 app.post("/user/checkEmail", mainController.filteremail);
 app.post("/user/checkUsername", mainController.filterusername);
