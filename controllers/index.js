@@ -13,8 +13,9 @@ module.exports = {
 			res.status(422).send("not find user");
 		} else {
 			req.session.save(() => {
-				req.session.userid = userinfo.id
-				res.status(200).json({id : userinfo.id, email : body.email});
+        req.session.userid = userinfo.id
+        req.session.username = userinfo.username
+				res.status(200).json({id : userinfo.id, email : body.email,username : userinfo.username});
 			});
 		}	
 	},
