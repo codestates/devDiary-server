@@ -4,7 +4,7 @@ const session = require("express-session");
 const logger = require("morgan");
 
 const mainController = require("./controllers");
-const port = 3000;
+const port = 4000;
 const app = express();
 
 app.use(
@@ -38,8 +38,8 @@ if (process.env.NODE_ENV !== "test") {
 	});
 }
 
-app.use("/", (req, res) => {
-	res.send("test");
-});
+// app.use("/", (req, res) => {
+// 	res.send("test");
+// });
 
 module.exports = app;

@@ -16,6 +16,8 @@ module.exports = {
 				req.session.userid = userinfo.email;
 				res.status(200).json(userinfo);
 			});
+		}
+	},
 	signUpController: async (req, res) => {
 		const body = req.body;
 		if (!body.email || !body.password || !body.username) {
