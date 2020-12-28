@@ -1,5 +1,27 @@
 const { diary } = require('../models')
+const { comment } = require('../models')
+
 module.exports = {
+  getPost: async (req,res) => {
+    let result = await diary.findOne({
+      include:{
+        model: comment,
+        attributes:["id","writer","content","createdAt"]
+      },
+      where:{
+        id:req.params.id
+      },
+      attributes:["id","title","writer","content","createdAt"]
+    })
+    .catch(err=>console.log(err));
+
+    if(!result){
+      res.status(400).json("Post Not Found");
+    }else{
+      res.status(200).json({data:result});
+    }
+  },
+  
   newPost: async (req, res) => {
     console.log(req.body);
     const body=req.body;
