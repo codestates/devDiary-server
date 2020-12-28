@@ -1,4 +1,5 @@
 {
+
   "name": "devdiary-server",
   "version": "1.0.0",
   "description": "",
@@ -14,6 +15,7 @@
   "author": "",
   "license": "ISC",
   "bugs": {
+
     "url": "https://github.com/Choe-Yun/devDiary-server/issues"
   },
   "homepage": "https://github.com/Choe-Yun/devDiary-server#readme",
