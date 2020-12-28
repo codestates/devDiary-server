@@ -22,7 +22,7 @@ app.use(
 
 app.use(
 	cors({
-		origin: true,
+		origin: "http://practice-react-ref-deploy.s3-website.ap-northeast-2.amazonaws.com/",
 		methods: ["POST"],
 		credentials: true,
 	}),
