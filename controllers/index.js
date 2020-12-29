@@ -18,6 +18,10 @@ module.exports = {
 			});
 		}
 	},
+  logout: async (req, res) => {
+		req.session.destroy();
+		res.status(205).send("logout successfully");
+  },
 	signUpController: async (req, res) => {
 		const body = req.body;
 		if (!body.email || !body.password || !body.username) {
