@@ -1,14 +1,13 @@
 const express=require("express");
 const cors=require("cors");
 const bodyParser = require("body-parser");
-const diaryController = require("./controllers/diaryController");
+const session = require("express-session");
+const diaryRouter = require('./routes/diary');
+const userRouter = require('./routes/user');
 
-// const usersRouter = require('./routes/users');
-// const diaryRouter = require('./routes/diaries');
-
+const port = 4000;
 const app=express();
 
-app.use(cors());
 app.use(bodyParser.json());
 
 app.post('/diary/newPost', diaryController.newPost);
@@ -16,6 +15,32 @@ app.post('/diary/updatePost', diaryController.updatePost);
 // app.use('/user', usersRouter);
 // app.use('/diary', diaryRouter);
 
-app.listen(3000, ()=>{
-    console.log('server on 3000');
-});
+app.use(
+	session({
+		secret: "@devDiary",
+		resave: false,
+		saveUninitialized: true,
+	}),
+);
+
+app.use(
+	cors({
+		origin: true,
+		methods: ["GET","POST"],
+		credentials: true,
+	}),
+);
+
+app.use(express.json());
+// app.use(express.urlencoded({ extended: fales }));
+
+app.use('/user', userRouter);
+app.use('/diary', diaryRouter);
+
+if (process.env.NODE_ENV !== "test") {
+	app.listen(port, () => {
+		console.log(`server listening on ${port}`);
+	});
+}
+
+module.exports = app;
