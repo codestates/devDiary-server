@@ -29,10 +29,10 @@ module.exports = {
         id:body.id
       }
     })
-    if(!result){
+    if(result[0]<1){
       res.status(400).send("update failed");
     }else{
-      res.status(200).send(result);
+      res.status(200).send("updated");
     }
   }
 }	
