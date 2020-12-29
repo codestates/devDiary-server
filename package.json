@@ -30,20 +30,5 @@
   "devDependencies": {
     "nodemon": "^2.0.6",
     "sequelize-cli": "^6.2.0"
-  },
-  "scripts": {
-    "test": "echo \"Error: no test specified\" && exit 1",
-    "start": "nodemon index.js"
-  },
-  "repository": {
-    "type": "git",
-    "url": "git+https://github.com/Choe-Yun/devDiary-server.git"
-  },
-  "author": "",
-  "license": "ISC",
-  "bugs": {
-    "url": "https://github.com/Choe-Yun/devDiary-server/issues"
-  },
-  "homepage": "https://github.com/Choe-Yun/devDiary-server#readme"
   }
 }

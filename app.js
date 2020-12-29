@@ -22,7 +22,7 @@ app.use(
 
 app.use(
 	cors({
-		origin: "http://practice-react-ref-deploy.s3-website.ap-northeast-2.amazonaws.com",
+		origin: true,
 		methods: ["GET","POST"],
 		credentials: true,
 	}),
@@ -30,11 +30,6 @@ app.use(
 
 app.use(express.json());
 // app.use(express.urlencoded({ extended: fales }));
-
-// app.post("/user/login", mainController.login);
-// app.post("/user/signup", mainController.signUpController);
-// app.post("/user/checkEmail", mainController.filteremail);
-// app.post("/user/checkUsername", mainController.filterusername);
 
 app.use('/user', userRouter);
 app.use('/diary', diaryRouter);
