@@ -1,27 +1,28 @@
 "use strict";
+
 require("dotenv").config();
 const fs = require("fs");
 const path = require("path");
 const Sequelize = require("sequelize");
 const basename = path.basename(__filename);
-const env = process.env.NODE_ENV || "development";
-const config = require(__dirname + "/../config/config.js")[env];
+// const env = process.env.NODE_ENV || 'development';
+// const config = require(__dirname + '/../config/config.json')[env];
 const db = {};
 
+// your config file will be in your directory
 var sequelize = new Sequelize(process.env.DATABASE_NAME, process.env.DATABASE_USERNAME, process.env.DATABASE_PASSWORD, {
-	host: "practice-database-deploy.cht7atdafw8y.ap-northeast-2.rds.amazonaws.com",
-	port: 3306,
-	logging: console.log,
-	maxConcurrentQueries: 100,
-	dialect: "mysql",
-	ssl: true,
-	dialectOptions: {
-		ssl: "Amazon RDS",
-	},
-	pool: { maxConnections: 5, maxIdleTime: 30 },
-	language: "en",
-});
-
+   host: 'practice-database-deploy.cht7atdafw8y.ap-northeast-2.rds.amazonaws.com',
+   port: 3306,
+   logging: console.log,
+   maxConcurrentQueries: 100,
+   dialect: 'mysql',
+   ssl:true,
+   dialectOptions: {
+       ssl:'Amazon RDS'
+   },
+   pool: { maxConnections: 5, maxIdleTime: 30},
+   language: 'en'
+})
 
 fs.readdirSync(__dirname)
 	.filter(file => {
@@ -33,9 +34,9 @@ fs.readdirSync(__dirname)
 	});
 
 Object.keys(db).forEach(modelName => {
-	if (db[modelName].associate) {
-		db[modelName].associate(db);
-	}
+  if (db[modelName].associate) {
+    db[modelName].associate(db);
+  }
 });
 
 db.sequelize = sequelize;
