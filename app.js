@@ -1,12 +1,14 @@
-const express = require("express");
-const cors = require("cors");
+const express=require("express");
+const cors=require("cors");
+const bodyParser = require("body-parser");
 const session = require("express-session");
-const logger = require("morgan");
-
-const mainController = require("./controllers");
 const diaryRouter = require('./routes/diary');
+const userRouter = require('./routes/user');
+
 const port = 4000;
-const app = express();
+const app=express();
+
+app.use(bodyParser.json());
 
 app.use(
 	session({
@@ -19,19 +21,15 @@ app.use(
 app.use(
 	cors({
 		origin: true,
-		methods: ["POST"],
+		methods: ["GET","POST"],
 		credentials: true,
 	}),
 );
 
-app.use(logger("dev"));
 app.use(express.json());
 // app.use(express.urlencoded({ extended: fales }));
 
-app.post("/user/login", mainController.login);
-app.post("/user/signup", mainController.signUpController);
-app.post("/user/checkEmail", mainController.filteremail);
-app.post("/user/checkUsername", mainController.filterusername);
+app.use('/user', userRouter);
 app.use('/diary', diaryRouter);
 
 if (process.env.NODE_ENV !== "test") {
@@ -39,9 +37,5 @@ if (process.env.NODE_ENV !== "test") {
 		console.log(`server listening on ${port}`);
 	});
 }
-
-// app.use("/", (req, res) => {
-// 	res.send("test");
-// });
 
 module.exports = app;

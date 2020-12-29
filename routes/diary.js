@@ -6,5 +6,13 @@ const diaryController = require('../controllers/diaryController');
 //GET diary
 router.get('/', diaryController.getPostlist);
 
+//POST diary/newPost
+router.post('/newPost', diaryController.newPost);
 
-module.exports = router; 
+//POST diary/updatePost
+router.post('/updatePost', diaryController.updatePost);
+
+//POST diary/deletePost
+router.post('/deletePost', diaryController.deletePost);
+
+module.exports = router;
