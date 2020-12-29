@@ -3,6 +3,9 @@ const router = express.Router();
 
 const diaryController = require('../controllers/diaryController');
 
+//GET diary/:id
+router.get('/:id', diaryController.getPost);
+
 //GET diary
 router.get('/', diaryController.getPostlist);
 
