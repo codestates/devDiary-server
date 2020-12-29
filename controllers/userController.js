@@ -1,7 +1,7 @@
 const { User } = require("../models");
 
 module.exports = {
-	login: async (req, res) => {
+  login: async (req, res) => {
 		const body = req.body;
 		const userinfo = await User.findOne({
 			where: {
@@ -13,7 +13,7 @@ module.exports = {
 			res.status(422).send("not find user");
 		} else {
 			req.session.save(() => {
-				req.session.userid = userinfo.email;
+				req.session.username = userinfo.username;
 				res.status(200).json(userinfo);
 			});
 		}
