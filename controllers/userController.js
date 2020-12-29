@@ -17,7 +17,7 @@ module.exports = {
         return res.status(400).json({message:"이메일이 틀렸습니다"})
       }else{
         let result = await User.update({
-          username:body.username
+          username: req.session.username
         },{
           where:{
             email:body.email
@@ -74,7 +74,7 @@ module.exports = {
       }else{
         let result = await User.update({
           password:body.newPassword,
-          username:body.username
+          username:req.session.username
         },
         {
           where:{
@@ -189,10 +189,10 @@ module.exports = {
 				username: body.username,
 			},
 		});
-		if (username) {
-			res.send(true);
+		if (!username) {
+			res.send({message:"valid"});
 		} else {
-			res.send(false);
+			res.send({message:"invalid"});
 		}
 	},
 };

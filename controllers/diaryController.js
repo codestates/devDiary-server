@@ -69,14 +69,14 @@ module.exports = {
     let result = await diary.create({
       title:body.title,
       content:body.content,
-      writer:body.writer,
-      tag:body.tag
+      writer:req.session.username,
+      tags:body.tags
     })
     .catch(err=>console.log(err));
     if(!result){
       res.status(400).send("failed");
     }else{
-      res.status(200).send(result);
+      res.status(200).send({message: "새 글을 등록했습니다"});
     }
   },
   
