@@ -72,7 +72,7 @@ module.exports = {
       writer:body.writer,
       tag:body.tag
     })
-    .catch(err=>console.log(err))
+    .catch(err=>console.log(err));
     if(!result){
       res.status(400).send("failed");
     }else{
@@ -92,6 +92,7 @@ module.exports = {
         id:body.id
       }
     })
+    .catch(err=>console.log(err));
     if(result[0]<1){
       res.status(400).send("update failed");
     }else{
@@ -121,6 +122,22 @@ module.exports = {
       }else{
         res.status(200).json({message:`${result} post deleted`});
       }
+    }
+  },
+
+  newComment: async (req, res) => {
+    const body = req.body;
+    const result=await comment.create({
+      diary_id:req.params.id,
+      writer: req.session.username,
+      content: body.content
+    })
+    .catch(err=>console.log(err))
+
+    if(!result){
+      res.status(400).send({message:"failed to posting new comment"});
+    }else{
+      res.status(200).send({message: "new Comment added"});
     }
   }
 }	
