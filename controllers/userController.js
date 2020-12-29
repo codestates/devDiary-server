@@ -1,45 +1,38 @@
 const { User, diarie, like, question, comment } = require("../models");
+const sequelize = require("sequelize");
 
 module.exports = {
-  login: async (req, res) => {
-		const body = req.body;
-		const userinfo = await User.findOne({
-			where: {
-				email: body.email,
-				password: body.password,
-			},
-		});
-		if (!userinfo) {
-			res.status(422).send("not find user");
-		} else {
-			req.session.save(() => {
-        req.session.userid = userinfo.id
-        req.session.username = userinfo.username
-				res.status(200).json({id : userinfo.id, email : body.email,username : userinfo.username});
-			});
-		}	
-  },
-  // User 와 연결된 테이블,
-  // diarie 와 연결된 테이블 include
-  // question 와 연결된 테이블 include
-  // like 와 연결된 테이블 include
-  // comment 와 연결된 테이블 include
-  
-	getuserinfo: async (req, res) => {
+  	getuserinfo: async (req, res) => {
     
-		const userinfo = await User.findAll({
-      // where : {id : req.session.userid},
+    const userinfo = await User.findOne({
+      attributes: ["id","email","username"],
       include : [{
         model : diarie,
         attributes : ["id","title","createdAt"],
+        include : [{
+          model : comment,
+          attributes : [[sequelize.fn("COUNT","diary_id"), "commentCount"]]
+        },{
+          model : like,
+          attributes : [[sequelize.fn("COUNT","diary_id"), "diarieLikeCount"]]
+        }]
+    },
+    {
+      model : like,
+      attributes : [[sequelize.fn('COUNT','user_id'), 'userLikeCount']]
     },
   {
     model : question,
     attributes : ["id","title","createdAt"],
-      
-  }]
-
-    }).catch(err => {console.log(err)})
+    include : [{
+      model : comment,
+      attributes : ["question_id"]
+    },{
+      model : like,
+      attributes : [[sequelize.fn("COUNT", "question_id"), "questionLikeCount"]]
+    }]
+  }
+]}).catch(err => {console.log(err)})
     if(!userinfo){
       res.status(404).send("not found")
     } else if(userinfo){
