@@ -1,4 +1,5 @@
 "use strict";
+
 require("dotenv").config();
 const fs = require("fs");
 const path = require("path");
@@ -20,7 +21,6 @@ var sequelize = new Sequelize(process.env.DATABASE_NAME, process.env.DATABASE_US
 	pool: { maxConnections: 5, maxIdleTime: 30 },
 	language: "en",
 });
-
 
 fs.readdirSync(__dirname)
 	.filter(file => {
