@@ -8,9 +8,7 @@ const userRouter = require('./routes/user');
 const port = 4000;
 const app=express();
 
-// app.use(cors());
 app.use(bodyParser.json());
-
 
 app.use(
 	session({
@@ -22,13 +20,14 @@ app.use(
 
 app.use(
 	cors({
-		origin: "http://practice-react-ref-deploy.s3-website.ap-northeast-2.amazonaws.com",
+		origin: true,
 		methods: ["GET","POST"],
 		credentials: true,
 	}),
 );
 
 app.use(express.json());
+// app.use(express.urlencoded({ extended: fales }));
 
 app.use('/user', userRouter);
 app.use('/diary', diaryRouter);
@@ -39,3 +38,4 @@ if (process.env.NODE_ENV !== "test") {
 	});
 }
 
+module.exports = app;

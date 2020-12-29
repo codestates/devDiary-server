@@ -14,12 +14,18 @@ module.exports = (sequelize, DataTypes) => {
       comment.belongsTo(models.diary,{
         foreignKey: 'diary_id',
         onDelete:'cascade'
-      })
+      });
+      models.comment.belongsTo(models.question, {
+        foreignKey : "question_id"
+      });
+      models.comment.belongsTo(models.diarie, {
+        foreignKey : "diary_id"
+      });
     }
   };
   comment.init({
-    diary_id: DataTypes.STRING,
-    question_id: DataTypes.STRING,
+    diary_id: DataTypes.INTEGER,
+    question_id: DataTypes.INTEGER,
     writer: DataTypes.STRING,
     content: DataTypes.STRING
   }, {

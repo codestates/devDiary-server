@@ -3,6 +3,12 @@ const router = express.Router();
 
 const diaryController = require('../controllers/diaryController');
 
+//GET diary/:id
+router.get('/:id', diaryController.getPost);
+
+//GET diary
+router.get('/', diaryController.getPostlist);
+
 //POST diary/newPost
 router.post('/newPost', diaryController.newPost);
 
@@ -11,5 +17,8 @@ router.post('/updatePost', diaryController.updatePost);
 
 //POST diary/id/newComment
 router.post("/:id/newComment", diaryController.newComment);
+
+//POST diary/deletePost
+router.post('/deletePost', diaryController.deletePost);
 
 module.exports = router;
