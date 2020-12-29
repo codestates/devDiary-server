@@ -34,5 +34,30 @@ module.exports = {
     }else{
       res.status(200).send("updated");
     }
+  },
+
+  deletePost: async (req, res) => {
+    const body = req.body;
+    let valid=await diary.findOne({ //작성자와 삭제하려는 사람이 같은 사람인지 유효성검사
+      where:{
+        id:body.id,
+        writer:body.username
+      }
+    })
+    if(!valid){
+      return res.status(400).json({message:"invalid writer or id"});
+    }else{
+      let result= await diary.destroy({
+        where:{
+          id:body.id
+        }
+      })
+  
+      if(!result){
+        res.status(400).json({message:"delete failed!"});
+      }else{
+        res.status(200).json({message:`${result} post deleted`});
+      }
+    }
   }
 }	
