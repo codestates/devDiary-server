@@ -11,13 +11,16 @@ module.exports = (sequelize, DataTypes) => {
      */
     static associate(models) {
       // define association here
+      diary.hasMany(models.comment, {
+        foreignKey: 'diary_id'
+      })
     }
   };
   diary.init({
     title: DataTypes.STRING,
     content: DataTypes.TEXT,
     writer: DataTypes.STRING,
-    tag: DataTypes.STRING
+    tags: DataTypes.STRING
   }, {
     sequelize,
     modelName: 'diary',
