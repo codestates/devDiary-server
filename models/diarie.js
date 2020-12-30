@@ -15,9 +15,6 @@ module.exports = (sequelize, DataTypes) => {
       }),
       models.diarie.hasMany(models.like, {
         foreignKey : "diary_id",
-        // scope : {
-        //   commentableType : "diarie"
-        // }
       }),
       models.diarie.hasMany(models.comment, {
         foreignKey : "id"

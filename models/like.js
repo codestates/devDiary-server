@@ -13,7 +13,7 @@ module.exports = (sequelize, DataTypes) => {
       models.like.belongsTo(models.User, {
         foreignKey : "user_id"
       }),
-      models.like.belongsTo(models.diary, {
+      models.like.belongsTo(models.diarie, {
         foreignKey : "diary_id"
       }),
       models.like.belongsTo(models.question, {
