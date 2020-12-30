@@ -8,14 +8,32 @@ module.exports = {
         primaryKey: true,
         type: Sequelize.INTEGER
       },
-      question_id: {
-        type: Sequelize.INTEGER
-      },
       diary_id: {
-        type: Sequelize.INTEGER
+        type: Sequelize.INTEGER,
+        references: {
+          model: 'diaries',
+          key: 'id',
+          // as: 'diary_id',
+        },
+        onDelete: 'CASCADE',
+      },
+      question_id: {
+        type: Sequelize.INTEGER,
+        references: {
+          model: 'questions',
+          key: 'id',
+          // as: 'diary_id',
+        },
+        onDelete: 'CASCADE',
       },
       user_id: {
-        type: Sequelize.INTEGER
+        type: Sequelize.INTEGER,
+        references: {
+          model: 'Users',
+          key: 'id',
+          // as: 'diary_id',
+        },
+        onDelete: 'CASCADE',
       },
       createdAt: {
         allowNull: false,

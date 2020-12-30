@@ -1,4 +1,4 @@
-const { diary, comment, like } = require('../models')
+const { diary, comment, User, like } = require('../models')
 const sequelize = require("sequelize");
 const Op = sequelize.Op;
 module.exports = {
@@ -53,10 +53,15 @@ module.exports = {
   },
   getPost: async (req,res) => {
     let result = await diary.findOne({
-      include:{
+      include:[{
         model: comment,
         attributes:["id","writer","content","createdAt"]
       },
+      {
+        model: like,
+        attributes: ["id"]
+      }
+    ],
       where:{
         id:req.params.id
       },
@@ -64,10 +69,28 @@ module.exports = {
     })
     .catch(err=>console.log(err));
 
+    let hadLiked = await like.findOne({
+      attributes:["user_id"],
+      include:{
+        model: User,
+        attributes:[],
+        where:{
+          username:req.session.username
+        }
+      },
+      where:{
+        diary_id:req.params.id
+      },
+    })
+
     if(!result){
       res.status(400).json("Post Not Found");
     }else{
-      res.status(200).json({data:result});
+      if(!hadLiked){
+        res.status(200).json({hadLiked:"false", data:result});
+      }else{
+        res.status(200).json({hadLiked:"true", data:result});
+      }
     }
   },
   newPost: async (req, res) => {
