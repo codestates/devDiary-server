@@ -15,7 +15,8 @@ module.exports = {
     } else if(deleteUserInfo){
       res.status(200).json(deleteUserInfo)
     }
-  }
+  },
+  
   updateUserinfo: async (req, res) => {
     console.log(req.body);
     const body=req.body;
