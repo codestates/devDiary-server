@@ -8,5 +8,5 @@ const userController = require("../controllers/userController");
 
 //Post user/deleteUser
 router.post("/deleteUser", userController.deleteUser)
-
+ 
 module.exports = router;
