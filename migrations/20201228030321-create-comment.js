@@ -1,21 +1,31 @@
 'use strict';
 module.exports = {
   up: async (queryInterface, Sequelize) => {
-    await queryInterface.createTable('likes', {
+    await queryInterface.createTable('comments', {
       id: {
         allowNull: false,
         autoIncrement: true,
         primaryKey: true,
         type: Sequelize.INTEGER
       },
+      diary_id: {
+        type: Sequelize.INTEGER,
+        references: {
+          model: 'diaries',
+          key: 'id',
+          // as: 'diary_id',
+        },
+        onDelete: 'CASCADE',
+        onUpdate: 'CASCADE'
+      },
       question_id: {
         type: Sequelize.INTEGER
       },
-      diary_id: {
-        type: Sequelize.INTEGER
+      writer: {
+        type: Sequelize.STRING
       },
-      user_id: {
-        type: Sequelize.INTEGER
+      content: {
+        type: Sequelize.STRING
       },
       createdAt: {
         allowNull: false,
@@ -25,9 +35,9 @@ module.exports = {
         allowNull: false,
         type: Sequelize.DATE
       }
-    });
+    })
   },
   down: async (queryInterface, Sequelize) => {
-    await queryInterface.dropTable('likes');
+    await queryInterface.dropTable('comments');
   }
 };

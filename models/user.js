@@ -41,29 +41,3 @@
    });
    return User;
  };
-
-// module.exports = (sequelize,DataTypes) => {
-//   const Users = sequelize.define("Users",{
-//     email : {
-//       type : DataTypes.STRING,
-//       allowNull : false
-//     },
-//     password : {
-//       type : DataTypes.STRING,
-//       allowNull : false
-//     },
-//     username : {
-//       type : DataTypes.STRING,
-//       allowNull : false
-//     }
-//   })
-//   Users.associate = (db) => {
-//     db.Users.hasMany(db.diaries,db.likes,db.questions, {
-//       foreignKey : "userId",
-//       scope: {
-//         commentable: 'Users'
-//       }
-//     })
-//   }
-//   return Users
-// }

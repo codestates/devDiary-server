@@ -19,14 +19,11 @@ module.exports = (sequelize, DataTypes) => {
       models.like.belongsTo(models.question, {
         foreignKey : "question_id"
       })
-      // models.like.belongsTo(models.question, {
-      //   foreignKey : "question_id"
-      // })
     }
   };
   like.init({
-    question_id: DataTypes.INTEGER,
     diary_id: DataTypes.INTEGER,
+    question_id: DataTypes.INTEGER,
     user_id: DataTypes.INTEGER
   }, {
     sequelize,

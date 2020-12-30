@@ -1,12 +1,14 @@
-const express = require("express");
-const cors = require("cors");
+const express=require("express");
+const cors=require("cors");
+const bodyParser = require("body-parser");
 const session = require("express-session");
-const usersRouter = require("./routes/user")
-// const logger = require("morgan");
+const diaryRouter = require('./routes/diary');
+const userRouter = require('./routes/user');
 
-// const mainController = require("./controllers/userController");
 const port = 4000;
-const app = express();
+const app=express();
+
+app.use(bodyParser.json());
 
 app.use(
 	session({
@@ -19,26 +21,21 @@ app.use(
 app.use(
 	cors({
 		origin: true,
-		methods: ["GET"],
+		methods: ["GET","POST"],
 		credentials: true,
 	}),
 );
 
-// app.use(logger("dev"));
 app.use(express.json());
 // app.use(express.urlencoded({ extended: fales }));
 
-// app.post("/user/login", mainController.login);
-app.use("/user", usersRouter)
+app.use('/user', userRouter);
+app.use('/diary', diaryRouter);
 
 if (process.env.NODE_ENV !== "test") {
 	app.listen(port, () => {
 		console.log(`server listening on ${port}`);
 	});
 }
-
-app.use("/", (req, res) => {
-	res.send("test");
-});
 
 module.exports = app;
