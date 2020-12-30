@@ -2,9 +2,9 @@ const { User, diarie, like, question, comment } = require("../models");
 const sequelize = require("sequelize");
 
 module.exports = {
-  deleteUser = async (req,res) =>{
+  deleteUser : async (req,res) =>{
     const body = req.body
-    const deleteUserInfo = await User.findOneAndDelete({
+    const deleteUserInfo = await User.destroy({
       where : {
         email : body.email,
         username : body.username,
