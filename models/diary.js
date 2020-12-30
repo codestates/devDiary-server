@@ -14,6 +14,9 @@ module.exports = (sequelize, DataTypes) => {
       diary.hasMany(models.comment, {
         foreignKey: 'diary_id'
       })
+      diary.hasMany(models.like, {
+        foreignKey: 'diary_id'
+      })
     }
   };
   diary.init({
