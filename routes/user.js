@@ -7,6 +7,9 @@ const userController = require("../controllers/userController");
 // router.get("/userinfo", userController.getuserinfo)
 
 //Post user/deleteUser
-router.post("/deleteUser", userController.deleteUser)
+// router.post("/deleteUser", userController.deleteUser)
+
+//Post user/CheckPassWord
+router.post("CheckPassWord", userController.CheckPassWord)
 
 module.exports = router;
