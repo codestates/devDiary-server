@@ -6,6 +6,9 @@ const userController = require("../controllers/userController");
 //Get user/userinfo
 router.get("/userinfo", userController.getuserinfo)
 
+//Post user/deleteUser
+router.post("/deleteUser", userController.deleteUser)
+ 
 //Post user/login
 router.post("/login", userController.login);
 
