@@ -9,10 +9,14 @@ module.exports = {
         attributes:[
           "title","writer","content","tags","createdAt"
         ],
-        include:{
-          model:comment,
-          attributes:["content"],
-        }
+        include:[{
+          model : comment,
+          attributes: ["id"]
+        },
+        {
+          model: like,
+          attributes: ["id"]
+        }]
       })
       .catch(err=>console.log(err))
       if(!result){
@@ -30,10 +34,14 @@ module.exports = {
             [Op.like]: `%${req.query.tag}%`
           }
         },
-        include:{
-          model:comment,
-          attributes:["content"],
+        include:[{
+          model : comment,
+          attributes: ["id"]
         },
+        {
+          model: like,
+          attributes: ["id"]
+        }]
       })
       .catch(err=>console.log(err))
       if(!result){
