@@ -38,5 +38,20 @@ module.exports = {
     } else if(userinfo){
       res.status(200).json(userinfo)
     }
-	}
+  },
+  deleteUser = async (req,res) =>{
+    const body = req.body
+    const deleteUserInfo = await User.findOneAndDelete({
+      where : {
+        email : body.email,
+        username : body.username,
+        password : body.password
+      }
+    }).catch(err => {console.log(err)})
+    if(!deleteUserInfo){
+      res.status(404).send({message : "돌아가"})
+    } else if(deleteUserInfo){
+      res.status(200).json(deleteUserInfo)
+    }
+  }
 };
