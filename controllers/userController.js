@@ -120,7 +120,7 @@ module.exports = {
 		} else {
 			req.session.save(() => {
 				req.session.username = userinfo.username;
-				res.status(200).json(userinfo);
+				res.status(200).json({email:userinfo.email, username:userinfo.username});
 			});
 		}
   },
