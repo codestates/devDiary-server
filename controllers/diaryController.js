@@ -6,60 +6,71 @@ module.exports = {
     const body=req.body;
 
     //트렌딩 태그 리스트 응답
-    let tagList = await diary.findAll({
+    let tags = await diary.findAll({
       attributes:["tags"]
     }).catch(err=>console.log(err));
 
-    let splitedTags=tagList.map(tags=>{
-      return tags.split("#");
+    // console.log(tags)
+    let tagList=tags.map(ele=>{
+      if(ele.tags){
+        return ele.tags;
+      }
     })
 
-    if(!req.query.tag){
-      let result = await diary.findAll({
-        attributes:[
-          "title","writer","content","tags","createdAt"
-        ],
-        include:[{
-          model : comment,
-          attributes: ["id"]
-        },
-        {
-          model: like,
-          attributes: ["id"]
-        }]
-      })
-      .catch(err=>console.log(err))
-      if(!result){
-        res.status(400).send({message: "failed to get post list"});
-      }else{
-        res.status(200).send({list:result});
+    let splitTaglist=tagList.map(ele=>{
+      if(ele){
+        return ele.split("#")
       }
-    }else{ 
-      let result = await diary.findAll({
-        attributes:[
-          "title","writer","content","tags","createdAt"
-        ],
-        where:{
-          tags:{
-            [Op.like]: `%${req.query.tag}%`
-          }
-        },
-        include:[{
-          model : comment,
-          attributes: ["id"]
-        },
-        {
-          model: like,
-          attributes: ["id"]
-        }]
-      })
-      .catch(err=>console.log(err))
-      if(!result){
-        res.status(400).send({message: "failed to get post list"});
-      }else{
-        res.status(200).send({tag:req.query.tag,list:result});
-      }
-    }
+    })
+    
+    res.send(splitTaglist)
+
+    // if(!req.query.tag){
+    //   let result = await diary.findAll({
+    //     attributes:[
+    //       "title","writer","content","tags","createdAt"
+    //     ],
+    //     include:[{
+    //       model : comment,
+    //       attributes: ["id"]
+    //     },
+    //     {
+    //       model: like,
+    //       attributes: ["id"]
+    //     }]
+    //   })
+    //   .catch(err=>console.log(err))
+    //   if(!result){
+    //     res.status(400).send({message: "failed to get post list"});
+    //   }else{
+    //     res.status(200).send({list:result});
+    //   }
+    // }else{ 
+    //   let result = await diary.findAll({
+    //     attributes:[
+    //       "title","writer","content","tags","createdAt"
+    //     ],
+    //     where:{
+    //       tags:{
+    //         [Op.like]: `%${req.query.tag}%`
+    //       }
+    //     },
+    //     include:[{
+    //       model : comment,
+    //       attributes: ["id"]
+    //     },
+    //     {
+    //       model: like,
+    //       attributes: ["id"]
+    //     }]
+    //   })
+    //   .catch(err=>console.log(err))
+    //   if(!result){
+    //     res.status(400).send({message: "failed to get post list"});
+    //   }else{
+    //     res.status(200).send({tag:req.query.tag,list:result});
+    //   }
+    // }
   },
   getPost: async (req,res) => {
     let result = await diary.findOne({
