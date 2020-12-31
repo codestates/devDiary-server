@@ -1,4 +1,4 @@
-const { User, diarie, like, question, comment } = require("../models");
+const { User, diary , like, question, comment } = require("../models");
 const sequelize = require("sequelize");
 module.exports = {
   deleteUser : async (req,res) =>{
@@ -133,10 +133,13 @@ module.exports = {
   getuserinfo: async (req, res) => {
     
     const userinfo = await User.findOne({
+       where : {
+         username : req.session.username
+       },
       attributes: ["id","email","username"],
       include : [{
-        model : diarie,
-        attributes : ["id","title","createdAt"],
+        model : diary,
+        attributes : ["id","writer","title","createdAt"],
         include : [{
           model : comment,
           attributes : [[sequelize.fn("COUNT","diary_id"), "commentCount"]]
@@ -146,12 +149,8 @@ module.exports = {
         }]
     },
     {
-      model : like,
-      attributes : [[sequelize.fn('COUNT','user_id'), 'userLikeCount']]
-    },
-    {
       model : question,
-      attributes : ["id","title","createdAt"],
+      attributes : ["id","writer","title","createdAt"],
       include : [{
         model : comment,
         attributes : ["question_id"]
