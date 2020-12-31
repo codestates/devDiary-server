@@ -4,6 +4,16 @@ const Op = sequelize.Op;
 module.exports = {
   getPostlist: async (req, res) => {
     const body=req.body;
+
+    //트렌딩 태그 리스트 응답
+    let tagList = await diary.findAll({
+      attributes:["tags"]
+    }).catch(err=>console.log(err));
+
+    let splitedTags=tagList.map(tags=>{
+      return tags.split("#");
+    })
+
     if(!req.query.tag){
       let result = await diary.findAll({
         attributes:[
