@@ -11,33 +11,24 @@
       * The `models/index` file will call this method automatically.
       */
      static associate(models) {
-       models.User.hasMany(models.diarie, {
-         foreignKey: "id",
-        //  scope: {
-        //  commentableType: 'User'
-        // }
-       })
-        models.User.hasMany(models.like, {
-          foreignKey : "id",
-          // scope: {
-          // commentableType: 'User'
-          // }
-        }),
-        models.User.hasMany(models.question, {
-          foreignKey : "id",
-          // scope: {
-          //   commentable: 'User'
-          // }
-        })
-     }
-   };
-   User.init({
-     email: DataTypes.STRING,
-     username: DataTypes.STRING,
-     password: DataTypes.STRING
-   }, {
-     sequelize,
-     modelName: 'User',
-   });
-   return User;
- };
+      User.hasMany(models.diaries, {
+        foreignKey: "writer",
+      });
+      User.hasMany(models.question, {
+        foreignKey : "writer",
+      });
+      User.hasMany(models.like, {
+        foreignKey : "id",
+      });
+    }
+  };
+  User.init({
+    email: DataTypes.STRING,
+    username: DataTypes.STRING,
+    password: DataTypes.STRING
+  }, {
+    sequelize,
+    modelName: 'User',
+  });
+  return User;
+};

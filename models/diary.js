@@ -11,19 +11,21 @@ module.exports = (sequelize, DataTypes) => {
      */
     static associate(models) {
       // define association here
-      diary.hasMany(models.comment, {
-        foreignKey: 'diary_id'
-      })
+      diary.belongsTo(models.User, {
+        foreignKey : "writer",
+      }),
       diary.hasMany(models.like, {
-        foreignKey: 'diary_id'
+        foreignKey : "diary_id",
+      }),
+      diary.hasMany(models.comment, {
+        foreignKey : "id"
       })
     }
   };
   diary.init({
     title: DataTypes.STRING,
     content: DataTypes.TEXT,
-    writer: DataTypes.STRING,
-    tags: DataTypes.STRING
+    writer: DataTypes.STRING
   }, {
     sequelize,
     modelName: 'diary',

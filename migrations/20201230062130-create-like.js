@@ -13,7 +13,6 @@ module.exports = {
         references: {
           model: 'diaries',
           key: 'id',
-          // as: 'diary_id',
         },
         onDelete: 'CASCADE',
       },
@@ -22,7 +21,6 @@ module.exports = {
         references: {
           model: 'questions',
           key: 'id',
-          // as: 'diary_id',
         },
         onDelete: 'CASCADE',
       },
@@ -31,7 +29,6 @@ module.exports = {
         references: {
           model: 'Users',
           key: 'id',
-          // as: 'diary_id',
         },
         onDelete: 'CASCADE',
       },

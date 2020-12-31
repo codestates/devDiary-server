@@ -9,10 +9,20 @@ module.exports = {
         type: Sequelize.INTEGER
       },
       diary_id: {
-        type: Sequelize.INTEGER
+        type: Sequelize.INTEGER,
+        references: {
+          model: 'diaries',
+          key: 'id',
+        },
+        onDelete: 'CASCADE',
       },
       question_id: {
-        type: Sequelize.INTEGER
+        type: Sequelize.INTEGER,
+        references: {
+          model: 'questions',
+          key: 'id',
+        },
+        onDelete: 'CASCADE',
       },
       writer: {
         type: Sequelize.STRING
