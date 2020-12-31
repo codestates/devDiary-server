@@ -134,10 +134,6 @@ module.exports = {
         }]
     },
     {
-      model : like,
-      attributes : [[sequelize.fn('COUNT','user_id'), 'userLikeCount']]
-    },
-    {
       model : question,
       attributes : ["id","title","createdAt"],
       include : [{
