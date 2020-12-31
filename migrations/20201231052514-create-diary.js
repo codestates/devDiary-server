@@ -9,18 +9,20 @@ module.exports = {
         type: Sequelize.INTEGER
       },
       title: {
-        type: Sequelize.STRING,
-        allowNull: false,
+        type: Sequelize.STRING
       },
       content: {
-        type: Sequelize.TEXT,
-        allowNull: false,
+        type: Sequelize.TEXT
       },
       writer: {
         type: Sequelize.STRING,
-        allowNull: false,
+        references: {
+          model: 'Users',
+          key: 'username',
+        },
+        onDelete: 'CASCADE',
       },
-      tag: {
+      tags:{
         type: Sequelize.STRING
       },
       createdAt: {

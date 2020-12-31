@@ -1,6 +1,23 @@
-const { User } = require('../models');
 const { updatePost } = require('./diaryController');
+const { User, diarie, like, question, comment } = require("../models");
+const sequelize = require("sequelize");
 module.exports = {
+  deleteUser : async (req,res) =>{
+    const body = req.body
+    const deleteUserInfo = await User.destroy({
+      where : {
+        email : body.email,
+        username : body.username,
+        password : body.password
+      }
+    }).catch(err => {console.log(err)})
+    if(!deleteUserInfo){
+      res.status(404).send({message : "Cant Delete"})
+    } else if(deleteUserInfo){
+      res.status(200).json(deleteUserInfo)
+    }
+  },
+  
   updateUserinfo: async (req, res) => {
     console.log(req.body);
     const body=req.body;
@@ -73,12 +90,12 @@ module.exports = {
       if(result[0]!==1){
         return res.status(400).send({message:"userInfo didn't changed"});
       }else{
-        return res.status(200).send({message:"userInfo updated", username:updatedUserInfo.username});   
+        return res.status(200).send({message:"userInfo updated", username:updatedUserInfo.username});  
       }
 	  }
   },
 
-	login: async (req, res) => {
+  login: async (req, res) => {
 		const body = req.body;
 		const userinfo = await User.findOne({
 			where: {
@@ -91,10 +108,54 @@ module.exports = {
 		} else {
 			req.session.save(() => {
 				req.session.username = userinfo.username;
-				res.status(200).json(userinfo);
+				res.status(200).json({email:userinfo.email, username:userinfo.username});
 			});
 		}
+  },
+  
+  logout: async (req, res) => {
+		req.session.destroy();
+    res.status(205).send("logout successfully");
+  },
+  
+  getuserinfo: async (req, res) => {
+    
+    const userinfo = await User.findOne({
+      attributes: ["id","email","username"],
+      include : [{
+        model : diarie,
+        attributes : ["id","title","createdAt"],
+        include : [{
+          model : comment,
+          attributes : [[sequelize.fn("COUNT","diary_id"), "commentCount"]]
+        },{
+          model : like,
+          attributes : [[sequelize.fn("COUNT","diary_id"), "diarieLikeCount"]]
+        }]
+    },
+    {
+      model : like,
+      attributes : [[sequelize.fn('COUNT','user_id'), 'userLikeCount']]
+    },
+    {
+      model : question,
+      attributes : ["id","title","createdAt"],
+      include : [{
+        model : comment,
+        attributes : ["question_id"]
+      },{
+        model : like,
+        attributes : [[sequelize.fn("COUNT", "question_id"), "questionLikeCount"]]
+      }]
+    }
+  ]}).catch(err => {console.log(err)})
+    if(!userinfo){
+      res.status(404).send("not found")
+    } else if(userinfo){
+      res.status(200).json(userinfo)
+    }
 	},
+  
 	signUpController: async (req, res) => {
 		const body = req.body;
 		if (!body.email || !body.password || !body.username) {
@@ -132,10 +193,21 @@ module.exports = {
 				username: body.username,
 			},
 		});
-		if (username) {
-			res.send(true);
+		if (!username) {
+			res.send({message:"valid"});
 		} else {
-			res.send(false);
+			res.send({message:"invalid"});
 		}
 	},
+  CheckPassWord : async (req,res) => {
+    const body = req.body
+    const check = await User.findOne({
+      where : body.password
+    })
+    if(!check){
+      res.status(422).send({message : "PassWord Not Same"})
+    } else {
+      res.status(200).send({message : "PassWord Same"})
+    }
+  }
 };

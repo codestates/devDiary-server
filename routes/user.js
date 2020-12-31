@@ -3,8 +3,20 @@ const router = express.Router();
 
 const userController = require("../controllers/userController");
 
+//Get user/userinfo
+router.get("/userinfo", userController.getuserinfo)
+
+//Post user/deleteUser
+router.post("/deleteUser", userController.deleteUser)
+ 
 //Post user/login
 router.post("/login", userController.login);
+
+//GET user/logout
+router.post("/logout", userController.logout);
+
+//Post user/CheckPassWord
+router.post("/checkPassword", userController.CheckPassWord)
 
 //Post user/signUp
 router.post("/signup", userController.signUpController);
