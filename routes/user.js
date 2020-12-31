@@ -12,7 +12,7 @@ router.post("/deleteUser", userController.deleteUser)
 //Post user/login
 router.post("/login", userController.login);
 
-//Post user/logout
+//GET user/logout
 router.post("/logout", userController.logout);
 
 //Post user/CheckPassWord
