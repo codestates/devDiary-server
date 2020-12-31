@@ -10,12 +10,15 @@
      static associate(models) {
       models.User.hasMany(models.diary, {
         foreignKey: "writer",
+        sourceKey : "username"
       });
       models.User.hasMany(models.question, {
         foreignKey : "writer",
+        sourceKey : "username"
       });
       models.User.hasMany(models.like, {
-        foreignKey : "id"
+        foreignKey : "id",
+        sourceKey : "id"
       });
     }
 
@@ -24,9 +27,11 @@
   };
   User.init({
     email: DataTypes.STRING,
-    username: {unique: true,
+    username: {
+    unique: true,
     type : DataTypes.STRING,
-    allowNull: false,},
+    allowNull: false
+  },
     password: DataTypes.STRING,
     
   }, {

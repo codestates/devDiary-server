@@ -13,10 +13,12 @@ module.exports = (sequelize, DataTypes) => {
       // define association here
       models.comment.belongsTo(models.question, {
         foreignKey : "question_id",
+        targetKey : "id",
         onDelete:'cascade'
       });
       models.comment.belongsTo(models.diary, {
         foreignKey : "diary_id",
+        targetKey : "id",
         onDelete:'cascade'
       });
     }

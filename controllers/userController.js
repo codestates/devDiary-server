@@ -131,21 +131,20 @@ module.exports = {
   },
   
   getuserinfo: async (req, res) => {
-    
-    const userinfo = await User.findOne({
-       where : {
-         username : req.session.username
-       },
+    const userinfo = await User.findAll({
+        where : {
+          username : req.session.username
+        },
       attributes: ["id","email","username"],
       include : [{
         model : diary,
         attributes : ["id","writer","title","createdAt"],
         include : [{
           model : comment,
-          attributes : [[sequelize.fn("COUNT","diary_id"), "commentCount"]]
+          attributes : ["id"]
         },{
           model : like,
-          attributes : [[sequelize.fn("COUNT","diary_id"), "diarieLikeCount"]]
+          attributes : ["id"]
         }]
     },
     {
@@ -153,10 +152,10 @@ module.exports = {
       attributes : ["id","writer","title","createdAt"],
       include : [{
         model : comment,
-        attributes : ["question_id"]
+        attributes : ["id"]//[[sequelize.fn("COUNT", "question_id"), "count"]]
       },{
         model : like,
-        attributes : [[sequelize.fn("COUNT", "question_id"), "questionLikeCount"]]
+        attributes : ["id"]//[[sequelize.fn("COUNT", "question_id"), "count"]]
       }]
     }
   ]}).catch(err => {console.log(err)})

@@ -11,13 +11,17 @@ module.exports = (sequelize, DataTypes) => {
      */
     static associate(models) {
       models.question.belongsTo(models.User, {
-        foreignKey : "username",
+        foreignKey : "writer",
+        targetKey : "username",
+        onDelete : "cascade"
       });
       models.question.hasMany(models.like, {
-        foreignKey : "question_id"
+        foreignKey : "question_id",
+        sourceKey : "id"
       });
       models.question.hasMany(models.comment, {
-        foreignKey : "id"
+        foreignKey : "id",
+        sourceKey : "id"
       });
     }
   };
