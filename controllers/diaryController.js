@@ -123,7 +123,7 @@ module.exports = {
       }
     })
     .catch(err=>console.log(err));
-    if(result[0]<1){
+    if(result[0]!==1){
       res.status(400).send("update failed");
     }else{
       res.status(200).send("updated");

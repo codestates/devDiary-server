@@ -11,11 +11,11 @@
       * The `models/index` file will call this method automatically.
       */
      static associate(models) {
-      User.hasMany(models.diaries, {
-        foreignKey: "writer",
+      User.hasMany(models.diary, {
+        foreignKey: "id",
       });
       User.hasMany(models.question, {
-        foreignKey : "writer",
+        foreignKey : "id",
       });
       User.hasMany(models.like, {
         foreignKey : "id",
