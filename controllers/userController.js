@@ -1,6 +1,6 @@
 
 const { updatePost } = require('./diaryController');
-const { User, diarie, like, question, comment } = require("../models");
+const { User, diary, like, question, comment } = require("../models");
 const sequelize = require("sequelize");
 module.exports = {
   deleteUser : async (req,res) =>{
