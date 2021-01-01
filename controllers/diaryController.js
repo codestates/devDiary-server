@@ -122,7 +122,8 @@ module.exports = {
     },
     {
       where:{
-        id:body.id
+        id:req.params.id,
+        writer:req.session.username
       }
     })
     .catch(err=>console.log(err));
@@ -137,8 +138,8 @@ module.exports = {
     const body = req.body;
     let valid=await diary.findOne({ //작성자와 삭제하려는 사람이 같은 사람인지 유효성검사
       where:{
-        id:body.id,
-        writer:body.username
+        id:req.params.id,
+        writer:req.session.username
       }
     })
     if(!valid){
@@ -146,7 +147,7 @@ module.exports = {
     }else{
       let result= await diary.destroy({
         where:{
-          id:body.id
+          id:req.params.id
         }
       })
   
