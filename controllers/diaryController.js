@@ -7,22 +7,40 @@ module.exports = {
 
     //트렌딩 태그 리스트 응답
     let tags = await diary.findAll({
-      attributes:["tags"]
+      attributes:["tags"],
+      where:{
+        tags: {
+          [Op.ne]: null
+        }
+      }
     }).catch(err=>console.log(err));
 
     // console.log(tags)
     let tagList=tags.map(ele=>{
-      if(ele.tags){
+      if(ele.tags!==undefined){
         return ele.tags;
       }
     })
-
     let splitTaglist=tagList.map(ele=>{
-      if(ele){
-        return ele.split("#")
+      if(ele!==undefined && ele!==null){
+        return ele.split("#");
       }
-    })
+    });
     
+    let countObj={};
+    for(let i=0; i<splitTaglist.length; i++){
+      for(let j=0 ; j<splitTaglist[i].length; j++){
+        if(splitTaglist[i][j]!==null && splitTaglist[i][j]!==""){
+          if(countObj[splitTaglist[i][j]]){
+            countObj[splitTaglist[i][j]]++;
+          }else{
+            countObj[splitTaglist[i][j]]=1;
+          }
+        }
+      }
+    }
+
+
     res.send(splitTaglist)
 
     // if(!req.query.tag){
