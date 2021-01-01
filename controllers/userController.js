@@ -1,3 +1,4 @@
+
 const { updatePost } = require('./diaryController');
 const { User, diarie, like, question, comment } = require("../models");
 const sequelize = require("sequelize");
@@ -117,29 +118,31 @@ module.exports = {
   },
   
   getuserinfo: async (req, res) => {
-    
-    const userinfo = await User.findOne({
+    const userinfo = await User.findAll({
+        where : {
+          username : req.session.username
+        },
       attributes: ["id","email","username"],
       include : [{
-        model : diarie,
-        attributes : ["id","title","createdAt"],
+        model : diary,
+        attributes : ["id","writer","title","createdAt"],
         include : [{
           model : comment,
-          attributes : [[sequelize.fn("COUNT","diary_id"), "commentCount"]]
+          attributes : ["id"]
         },{
           model : like,
-          attributes : [[sequelize.fn("COUNT","diary_id"), "diarieLikeCount"]]
+          attributes : ["id"]
         }]
     },
     {
       model : question,
-      attributes : ["id","title","createdAt"],
+      attributes : ["id","writer","title","createdAt"],
       include : [{
         model : comment,
-        attributes : ["question_id"]
+        attributes : ["id"]//[[sequelize.fn("COUNT", "question_id"), "count"]]
       },{
         model : like,
-        attributes : [[sequelize.fn("COUNT", "question_id"), "questionLikeCount"]]
+        attributes : ["id"]//[[sequelize.fn("COUNT", "question_id"), "count"]]
       }]
     }
   ]}).catch(err => {console.log(err)})
