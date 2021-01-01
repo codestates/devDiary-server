@@ -172,5 +172,40 @@ module.exports = {
     }else{
       res.status(200).send({message: "new Comment added"});
     }
+  },
+
+  postLike: async (req, res) => {
+    let diaryId=req.params.id;
+
+    let userId= await User.findOne({
+      attributes:["id"],
+      where:{
+        // username:req.session.username
+        username:"테스트에옹"
+      }
+    }).catch(err=>console.log(err))
+
+    let result = await like.findOrCreate({
+      where:{
+        user_id:userId.id,
+        diary_id:diaryId
+      },
+      default:{
+        user_id:userId.id,
+        diary_id:diaryId
+      }
+    }).catch(err=>console.log(err))
+
+    if(result[1]){ //true일 때 == 로우가 새로 만들어짐
+      res.status(200).send({message: "글에 좋아요로 반응했습니다"})
+    }else{
+      let deleteLike=await like.destroy({
+        where:{
+          user_id:userId.id,
+          diary_id:diaryId
+        }
+      })
+      res.status(200).send({message: "좋아요를 제거했습니다"})
+    }
   }
 }	
