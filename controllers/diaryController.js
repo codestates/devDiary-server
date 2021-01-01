@@ -7,7 +7,7 @@ module.exports = {
     if(!req.query.tag){
       let result = await diary.findAll({
         attributes:[
-          "title","writer","content","tags","createdAt"
+          "id","title","writer","content","tags","createdAt"
         ],
         include:[{
           model : comment,
@@ -69,19 +69,22 @@ module.exports = {
     })
     .catch(err=>console.log(err));
 
-    let hadLiked = await like.findOne({
-      attributes:["user_id"],
-      include:{
-        model: User,
-        attributes:[],
+    let hadLiked;
+    if(req.session.username){
+      hadLiked = await like.findOne({
+        attributes:["user_id"],
+        include:{
+          model: User,
+          attributes:[],
+          where:{
+            username:req.session.username
+          }
+        },
         where:{
-          username:req.session.username
-        }
-      },
-      where:{
-        diary_id:req.params.id
-      },
-    })
+          diary_id:req.params.id
+        },
+      })
+    }
 
     if(!result){
       res.status(400).json("Post Not Found");
