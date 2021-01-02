@@ -14,7 +14,8 @@ module.exports = (sequelize, DataTypes) => {
       models.diary.belongsTo(models.User, {
         foreignKey : "writer",
         targetKey : "username",
-        onDelete : "cascade"
+        onDelete : "cascade",
+        onUpdate:"cascade"
       });
       models.diary.hasMany(models.like, {
         foreignKey : "diary_id",

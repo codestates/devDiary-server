@@ -22,6 +22,6 @@ router.post("/:id/newComment", diaryController.newComment);
 router.post('/:id/deletePost', diaryController.deletePost);
 
 //POST diary/id/postLike
-router.post('/:id/postLike', diaryController.postLike);
+router.post('/:id/likePost', diaryController.postLike);
 
 module.exports = router;

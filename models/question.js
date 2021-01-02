@@ -13,14 +13,15 @@ module.exports = (sequelize, DataTypes) => {
       models.question.belongsTo(models.User, {
         foreignKey : "writer",
         targetKey : "username",
-        onDelete : "cascade"
+        onDelete : "cascade",
+        onUpdate:"cascade"
       });
       models.question.hasMany(models.like, {
         foreignKey : "question_id",
         sourceKey : "id"
       });
       models.question.hasMany(models.comment, {
-        foreignKey : "id",
+        foreignKey : "question_id",
         sourceKey : "id"
       });
     }

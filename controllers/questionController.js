@@ -78,13 +78,14 @@ module.exports = {
   },
   getPost: async (req,res) => {
     let result = await question.findOne({
-      include:[{
+      include:[
+      {
         model: comment,
-        attributes:["id","writer","content","createdAt"]
+        attributes:["question_id","writer","content","createdAt"],
       },
       {
         model: like,
-        attributes: ["id"]
+        attributes: ["id"]        
       }
     ],
       where:{
@@ -206,8 +207,7 @@ module.exports = {
     let userId= await User.findOne({
       attributes:["id"],
       where:{
-        // username:req.session.username
-        username:"테스트에옹"
+        username:req.session.username
       }
     }).catch(err=>console.log(err))
 

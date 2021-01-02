@@ -206,8 +206,7 @@ module.exports = {
     let userId= await User.findOne({
       attributes:["id"],
       where:{
-        // username:req.session.username
-        username:"테스트에옹"
+        username:req.session.username
       }
     }).catch(err=>console.log(err))
 

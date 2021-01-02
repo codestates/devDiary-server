@@ -40,6 +40,7 @@ module.exports = {
       if(result[0]!==1){
         return res.status(400).send({message:"userInfo didn't changed"});
       }else{
+        req.session.username=updatedUserInfo.username;
         return res.status(200).send({message:"userInfo updated", username:updatedUserInfo.username});   
       }
     }
@@ -89,6 +90,7 @@ module.exports = {
       if(result[0]!==1){
         return res.status(400).send({message:"userInfo didn't changed"});
       }else{
+        req.session.username=updatedUserInfo.username;
         return res.status(200).send({message:"userInfo updated", username:updatedUserInfo.username});  
       }
 	  }

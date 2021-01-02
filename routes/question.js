@@ -16,7 +16,7 @@ router.post('/newPost', questionController.newPost);
 router.post("/:id/newComment", questionController.newComment);
 
 //POST question/id/postLike
-router.post('/:id/postLike', questionController.postLike);
+router.post('/:id/likePost', questionController.postLike);
 
 //POST question/id/updatePost
 router.post('/:id/updatePost', questionController.updatePost);

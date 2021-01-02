@@ -20,7 +20,8 @@ module.exports = {
           model: 'Users',
           key: 'username',
         },
-        onDelete: 'CASCADE',
+        // onDelete: 'CASCADE',
+        onUpdate: 'CASCADE'
       },
       tags:{
         type: Sequelize.STRING
