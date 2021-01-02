@@ -18,6 +18,9 @@ router.post('/updatePost', diaryController.updatePost);
 //POST diary/id/newComment
 router.post("/:id/newComment", diaryController.newComment);
 
+//POST diary/id/postLike
+router.post('/:id/postLike', diaryController.postLike);
+
 //POST diary/deletePost
 router.post('/deletePost', diaryController.deletePost);
 
