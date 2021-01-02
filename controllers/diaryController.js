@@ -4,7 +4,7 @@ const Op = sequelize.Op;
 module.exports = {
   getPostlist: async (req, res) => {
     const body=req.body;
-    if(!req.query.tag){
+    if(!req.query.tag && !req.query.q){
       let result = await diary.findAll({
         attributes:[
           "id","title","writer","content","tags","createdAt"
@@ -24,7 +24,7 @@ module.exports = {
       }else{
         res.status(200).send({list:result});
       }
-    }else{ 
+    }else if(req.query.tag!==null && req.query.q==null){ 
       let result = await diary.findAll({
         attributes:[
           "title","writer","content","tags","createdAt"
@@ -48,6 +48,31 @@ module.exports = {
         res.status(400).send({message: "failed to get post list"});
       }else{
         res.status(200).send({tag:req.query.tag,list:result});
+      }
+    }else if(req.query.q){
+      let result = await diary.findAll({
+        attributes:[
+          "title","writer","content","tags","createdAt"
+        ],
+        where:{
+          title:{
+            [Op.like]: `%${req.query.q}%`
+          }
+        },
+        include:[{
+          model : comment,
+          attributes: ["id"]
+        },
+        {
+          model: like,
+          attributes: ["id"]
+        }]
+      })
+      .catch(err=>console.log(err))
+      if(!result){
+        res.status(400).send({message: "failed to get post list"});
+      }else{
+        res.status(200).send({query:req.query.q,list:result});
       }
     }
   },
@@ -172,6 +197,41 @@ module.exports = {
       res.status(400).send({message:"failed to posting new comment"});
     }else{
       res.status(200).send({message: "new Comment added"});
+    }
+  },
+
+  postLike: async (req, res) => {
+    let diaryId=req.params.id;
+
+    let userId= await User.findOne({
+      attributes:["id"],
+      where:{
+        // username:req.session.username
+        username:"테스트에옹"
+      }
+    }).catch(err=>console.log(err))
+
+    let result = await like.findOrCreate({
+      where:{
+        user_id:userId.id,
+        diary_id:diaryId
+      },
+      default:{
+        user_id:userId.id,
+        diary_id:diaryId
+      }
+    }).catch(err=>console.log(err))
+
+    if(result[1]){ //true일 때 == 로우가 새로 만들어짐
+      res.status(200).send({message: "글에 좋아요로 반응했습니다"})
+    }else{
+      let deleteLike=await like.destroy({
+        where:{
+          user_id:userId.id,
+          diary_id:diaryId
+        }
+      })
+      res.status(200).send({message: "좋아요를 제거했습니다"})
     }
   }
 }	
