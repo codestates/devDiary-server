@@ -21,6 +21,7 @@ module.exports = {
         return ele.tags;
       }
     })
+    console.log(tagList)
     let splitTaglist=tagList.map(ele=>{
       if(ele!==undefined && ele!==null){
         return ele.split("#");
@@ -40,55 +41,67 @@ module.exports = {
       }
     }
 
+    //많이 사용된 태그5개 고르기
+    let trendingTags=[];
+    for(let i=0; i<5; i++){
+      let max=0;
+      let maxTag='';
+      for(let key in countObj){
+        if(countObj[key]>max){
+          max=countObj[key];
+          maxTag=key;
+        }
+      }
+      trendingTags.push(maxTag);
+      delete countObj[maxTag];
+    }
 
-    res.send(splitTaglist)
-
-    // if(!req.query.tag){
-    //   let result = await diary.findAll({
-    //     attributes:[
-    //       "title","writer","content","tags","createdAt"
-    //     ],
-    //     include:[{
-    //       model : comment,
-    //       attributes: ["id"]
-    //     },
-    //     {
-    //       model: like,
-    //       attributes: ["id"]
-    //     }]
-    //   })
-    //   .catch(err=>console.log(err))
-    //   if(!result){
-    //     res.status(400).send({message: "failed to get post list"});
-    //   }else{
-    //     res.status(200).send({list:result});
-    //   }
-    // }else{ 
-    //   let result = await diary.findAll({
-    //     attributes:[
-    //       "title","writer","content","tags","createdAt"
-    //     ],
-    //     where:{
-    //       tags:{
-    //         [Op.like]: `%${req.query.tag}%`
-    //       }
-    //     },
-    //     include:[{
-    //       model : comment,
-    //       attributes: ["id"]
-    //     },
-    //     {
-    //       model: like,
-    //       attributes: ["id"]
-    //     }]
-    //   })
-    //   .catch(err=>console.log(err))
-    //   if(!result){
-    //     res.status(400).send({message: "failed to get post list"});
-    //   }else{
-    //     res.status(200).send({tag:req.query.tag,list:result});
-    //   }
-    // }
+    if(!req.query.tag){
+      let result = await diary.findAll({
+        attributes:[
+          "title","writer","content","tags","createdAt"
+        ],
+        include:[{
+          model : comment,
+          attributes: ["id"]
+        },
+        {
+          model: like,
+          attributes: ["id"]
+        }]
+      })
+      .catch(err=>console.log(err))
+      if(!result){
+        res.status(400).send({message: "failed to get post list"});
+      }else{
+        res.status(200).send({tagList:trendingTags ,list:result});
+      }
+    }else{ 
+      let result = await diary.findAll({
+        attributes:[
+          "title","writer","content","tags","createdAt"
+        ],
+        where:{
+          tags:{
+            [Op.like]: `%${req.query.tag}%`
+          }
+        },
+        include:[{
+          model : comment,
+          attributes: ["id"]
+        },
+        {
+          model: like,
+          attributes: ["id"]
+        }]
+      })
+      .catch(err=>console.log(err))
+      if(!result){
+        res.status(400).send({message: "failed to get post list"});
+      }else{
+        res.status(200).send({tag:req.query.tag,list:result});
+      }
+    }
   },
   getPost: async (req,res) => {
     let result = await diary.findOne({
