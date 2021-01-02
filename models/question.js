@@ -28,7 +28,8 @@ module.exports = (sequelize, DataTypes) => {
   question.init({
     title: DataTypes.STRING,
     content: DataTypes.STRING,
-    writer: DataTypes.STRING
+    writer: DataTypes.STRING,
+    tags: DataTypes.STRING,
   }, {
     sequelize,
     modelName: 'question',
