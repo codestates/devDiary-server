@@ -103,7 +103,7 @@ module.exports = {
 				email: body.email,
 				password: body.password,
 			},
-		});
+		}).catch(err=>console.log(err));
 		if (!userinfo) {
 			res.status(422).send("not find user");
 		} else {
@@ -166,7 +166,7 @@ module.exports = {
 				email: body.email,
 				password: body.password,
 				username: body.username,
-			});
+			}).catch(err=>console.log(err));
 			if (createuserinfo) {
 				res.status(200).json(createuserinfo);
 			}
@@ -178,7 +178,7 @@ module.exports = {
 			where: {
 				email: body.email,
 			},
-		});
+		}).catch(err=>console.log(err));
 		if (email) {
 			res.send(true);
 		} else {
@@ -191,7 +191,7 @@ module.exports = {
 			where: {
 				username: body.username,
 			},
-		});
+		}).catch(err=>console.log(err));
 		if (!username) {
 			res.send({message:"valid"});
 		} else {
@@ -202,7 +202,7 @@ module.exports = {
     const body = req.body
     const check = await User.findOne({
       where : body.password
-    })
+    }).catch(err=>console.log(err));
     if(!check){
       res.status(422).send({message : "PassWord Not Same"})
     } else {

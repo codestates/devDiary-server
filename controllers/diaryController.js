@@ -108,7 +108,7 @@ module.exports = {
         where:{
           diary_id:req.params.id
         },
-      })
+      }).catch(err=>console.log(err));
     }
 
     if(!result){
@@ -166,7 +166,7 @@ module.exports = {
         id:req.params.id,
         writer:req.session.username
       }
-    })
+    }).catch(err=>console.log(err));
     if(!valid){
       return res.status(400).json({message:"invalid writer or id"});
     }else{
@@ -174,7 +174,7 @@ module.exports = {
         where:{
           id:req.params.id
         }
-      })
+      }).catch(err=>console.log(err));
   
       if(!result){
         res.status(400).json({message:"delete failed!"});
@@ -229,7 +229,7 @@ module.exports = {
           user_id:userId.id,
           diary_id:diaryId
         }
-      })
+      }).catch(err=>console.log(err));
       res.status(200).send({message: "좋아요를 제거했습니다"})
     }
   }
