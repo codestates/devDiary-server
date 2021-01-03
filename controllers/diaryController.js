@@ -4,6 +4,58 @@ const Op = sequelize.Op;
 module.exports = {
   getPostlist: async (req, res) => {
     const body=req.body;
+
+    //트렌딩 태그 리스트 응답
+    let tags = await diary.findAll({
+      attributes:["tags"],
+      where:{
+        tags: {
+          [Op.ne]: null
+        }
+      }
+    }).catch(err=>console.log(err));
+
+    // console.log(tags)
+    let tagList=tags.map(ele=>{
+      if(ele.tags!==undefined){
+        return ele.tags;
+      }
+    })
+    console.log(tagList)
+    let splitTaglist=tagList.map(ele=>{
+      if(ele!==undefined && ele!==null){
+        return ele.split("#");
+      }
+    });
+    
+    let countObj={};
+    for(let i=0; i<splitTaglist.length; i++){
+      for(let j=0 ; j<splitTaglist[i].length; j++){
+        if(splitTaglist[i][j]!==null && splitTaglist[i][j]!==""){
+          if(countObj[splitTaglist[i][j]]){
+            countObj[splitTaglist[i][j]]++;
+          }else{
+            countObj[splitTaglist[i][j]]=1;
+          }
+        }
+      }
+    }
+
+    //많이 사용된 태그5개 고르기
+    let trendingTags=[];
+    for(let i=0; i<5; i++){
+      let max=0;
+      let maxTag='';
+      for(let key in countObj){
+        if(countObj[key]>max){
+          max=countObj[key];
+          maxTag=key;
+        }
+      }
+      trendingTags.push(maxTag);
+      delete countObj[maxTag];
+    }
+
     if(!req.query.tag && !req.query.q){
       let result = await diary.findAll({
         attributes:[
@@ -22,7 +74,7 @@ module.exports = {
       if(!result){
         res.status(400).send({message: "failed to get post list"});
       }else{
-        res.status(200).send({list:result});
+        res.status(200).send({tagList:trendingTags ,list:result});
       }
     }else if(req.query.tag!==null && req.query.q==null){ 
       let result = await diary.findAll({
