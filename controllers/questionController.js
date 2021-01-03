@@ -143,7 +143,7 @@ module.exports = {
       where:{
         id:req.params.id
       },
-      attributes:["id","title","writer","content","createdAt"]
+      attributes:["id","title","writer","tags","content","createdAt"]
     })
     .catch(err=>console.log(err));
 
