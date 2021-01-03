@@ -79,7 +79,7 @@ module.exports = {
     }else if(req.query.tag!==null && req.query.q==null){ 
       let result = await diary.findAll({
         attributes:[
-          "title","writer","content","tags","createdAt"
+          "id","title","writer","content","tags","createdAt"
         ],
         where:{
           tags:{
@@ -104,7 +104,7 @@ module.exports = {
     }else if(req.query.q){
       let result = await diary.findAll({
         attributes:[
-          "title","writer","content","tags","createdAt"
+          "id","title","writer","content","tags","createdAt"
         ],
         where:{
           title:{
