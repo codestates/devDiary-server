@@ -96,10 +96,60 @@ module.exports = {
         }]
       })
       .catch(err=>console.log(err))
+      let tags = await diary.findAll({
+        attributes:["tags"],
+        where:{
+          tags: {
+            [Op.ne]: null
+          }
+        }
+      }).catch(err=>console.log(err));
+  
+      // console.log(tags)
+      let tagList=tags.map(ele=>{
+        if(ele.tags!==undefined){
+          return ele.tags;
+        }
+      })
+      console.log(tagList)
+      let splitTaglist=tagList.map(ele=>{
+        if(ele!==undefined && ele!==null){
+          return ele.split("#");
+        }
+      });
+      
+      let countObj={};
+      for(let i=0; i<splitTaglist.length; i++){
+        for(let j=0 ; j<splitTaglist[i].length; j++){
+          if(splitTaglist[i][j]!==null && splitTaglist[i][j]!==""){
+            if(countObj[splitTaglist[i][j]]){
+              countObj[splitTaglist[i][j]]++;
+            }else{
+              countObj[splitTaglist[i][j]]=1;
+            }
+          }
+        }
+      }
+  
+      //많이 사용된 태그5개 고르기
+      let trendingTags=[];
+      for(let i=0; i<5; i++){
+        let max=0;
+        let maxTag='';
+        for(let key in countObj){
+          if(countObj[key]>max){
+            max=countObj[key];
+            maxTag=key;
+          }
+        }
+        trendingTags.push(maxTag);
+        delete countObj[maxTag];
+      }
+  
       if(!result){
         res.status(400).send({message: "failed to get post list"});
       }else{
-        res.status(200).send({tag:req.query.tag,list:result});
+        res.status(200).send({tag:req.query.tag,list:result,tagList:trendingTags});
       }
     }else if(req.query.q){
       let result = await diary.findAll({
