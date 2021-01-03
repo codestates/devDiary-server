@@ -195,7 +195,9 @@ module.exports = {
   CheckPassWord : async (req,res) => {
     const body = req.body
     const check = await User.findOne({
-      where : body.password
+      where : {
+        password:body.oldPassword
+      }
     }).catch(err=>console.log(err));
     if(!check){
       res.status(422).send({message : "PassWord Not Same"})
