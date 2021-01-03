@@ -40,7 +40,7 @@ module.exports = {
       if(result[0]!==1){
         return res.status(400).send({message:"userInfo didn't changed"});
       }else{
-        req.session.username=updatedUserInfo.username;
+        req.session.username=updatedUserInfo.username; 
         return res.status(200).send({message:"userInfo updated", username:updatedUserInfo.username});   
       }
     }
@@ -55,12 +55,6 @@ module.exports = {
         }
       })
       .catch(err=>console.log(err))
-
-      let updatedUserInfo = await User.findOne({
-        where:{
-          email:body.email
-        }
-      }).catch(err=>{console.log(err)})
 
       if(result[0]!==1){
         return res.status(400).send({message:"userInfo didn't changed"});
