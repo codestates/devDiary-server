@@ -11,22 +11,22 @@ module.exports = (sequelize, DataTypes) => {
      */
     static associate(models) {
       models.like.belongsTo(models.User, {
-        foreignKey : "user_id"
+        foreignKey : "user_id",
+        targetKey : 'id'
       }),
-      models.like.belongsTo(models.diarie, {
-        foreignKey : "diary_id"
+      models.like.belongsTo(models.diary, {
+        foreignKey : "diary_id",
+        targetKey : "id"
       }),
       models.like.belongsTo(models.question, {
-        foreignKey : "question_id"
+        foreignKey : "question_id",
+        targetKey: "id"
       })
-      // models.like.belongsTo(models.question, {
-      //   foreignKey : "question_id"
-      // })
     }
   };
   like.init({
-    question_id: DataTypes.INTEGER,
     diary_id: DataTypes.INTEGER,
+    question_id: DataTypes.INTEGER,
     user_id: DataTypes.INTEGER
   }, {
     sequelize,

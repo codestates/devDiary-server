@@ -15,6 +15,15 @@ module.exports = {
         type: Sequelize.STRING
       },
       writer: {
+        type: Sequelize.STRING,
+        references: {
+          model: 'Users',
+          key: 'username',
+        },
+        // onDelete: 'CASCADE',
+        onUpdate: 'CASCADE'
+      },
+      tags:{
         type: Sequelize.STRING
       },
       createdAt: {

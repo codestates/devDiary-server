@@ -15,7 +15,8 @@ module.exports = {
         type: Sequelize.STRING
       },
       username: {
-        type: Sequelize.STRING
+        type: Sequelize.STRING,
+        unique:true
       },
       createdAt: {
         allowNull: false,
@@ -27,6 +28,8 @@ module.exports = {
       }
     });
   },
+
+
   down: async (queryInterface, Sequelize) => {
     await queryInterface.dropTable('Users');
   }

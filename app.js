@@ -3,6 +3,7 @@ const cors=require("cors");
 const bodyParser = require("body-parser");
 const session = require("express-session");
 const diaryRouter = require('./routes/diary');
+const questionRouter = require('./routes/question');
 const userRouter = require('./routes/user');
 
 const port = 4000;
@@ -20,7 +21,7 @@ app.use(
 
 app.use(
 	cors({
-		origin: true,
+		origin: "http://practice-react-ref-deploy.s3-website.ap-northeast-2.amazonaws.com",
 		methods: ["GET","POST"],
 		credentials: true,
 	}),
@@ -31,6 +32,7 @@ app.use(express.json());
 
 app.use('/user', userRouter);
 app.use('/diary', diaryRouter);
+app.use('/question', questionRouter);
 
 if (process.env.NODE_ENV !== "test") {
 	app.listen(port, () => {

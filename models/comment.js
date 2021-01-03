@@ -11,15 +11,15 @@ module.exports = (sequelize, DataTypes) => {
      */
     static associate(models) {
       // define association here
-      comment.belongsTo(models.diary,{
-        foreignKey: 'diary_id',
+      models.comment.belongsTo(models.question, {
+        foreignKey : "question_id",
+        targetKey : "id",
         onDelete:'cascade'
       });
-      models.comment.belongsTo(models.question, {
-        foreignKey : "question_id"
-      });
-      models.comment.belongsTo(models.diarie, {
-        foreignKey : "diary_id"
+      models.comment.belongsTo(models.diary, {
+        foreignKey : "diary_id",
+        targetKey : "id",
+        onDelete:'cascade'
       });
     }
   };
