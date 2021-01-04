@@ -193,16 +193,15 @@ module.exports = {
 		}
 	},
   CheckPassWord : async (req,res) => {
-    const body = req.body
     const check = await User.findOne({
       where : {
-        password:body.oldPassword
+        username : req.session.username
       }
     }).catch(err=>console.log(err));
-    if(!check){
-      res.status(422).send({message : "PassWord Not Same"})
+    if(req.body.oldPassword===check.password){
+      res.status(200).send({message : "same"})
     } else {
-      res.status(200).send({message : "PassWord Same"})
+      res.status(422).send({message : "not same"})
     }
   }
 };
