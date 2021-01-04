@@ -196,7 +196,7 @@ module.exports = {
     let result = await question.update({
       title:body.title,
       content:body.content,
-      tag:body.tag
+      tags:body.tags
     },
     {
       where:{

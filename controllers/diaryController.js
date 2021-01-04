@@ -195,7 +195,7 @@ module.exports = {
     let result = await diary.update({
       title:body.title,
       content:body.content,
-      tag:body.tag
+      tags:body.tags
     },
     {
       where:{
