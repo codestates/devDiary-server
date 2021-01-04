@@ -99,7 +99,7 @@ module.exports = {
       if(!result){
         res.status(400).send({message: "failed to get post list"});
       }else{
-        res.status(200).send({tag:req.query.tag,list:result});
+        res.status(200).send({tag:req.query.tag,tagList:trendingTags,list:result});
       }
     }else if(req.query.q){
       let result = await diary.findAll({
@@ -124,7 +124,7 @@ module.exports = {
       if(!result){
         res.status(400).send({message: "failed to get post list"});
       }else{
-        res.status(200).send({query:req.query.q,list:result});
+        res.status(200).send({query:req.query.q,tagList:trendingTags,list:result});
       }
     }
   },
