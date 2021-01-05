@@ -11,17 +11,21 @@ const db = {};
 
 // your config file will be in your directory
 var sequelize = new Sequelize(process.env.DATABASE_NAME, process.env.DATABASE_USERNAME, process.env.DATABASE_PASSWORD, {
-   host: 'practice-database-deploy.cht7atdafw8y.ap-northeast-2.rds.amazonaws.com',
-   port: 3306,
-   logging: console.log,
-   maxConcurrentQueries: 100,
-   dialect: 'mysql',
-   ssl:true,
-   dialectOptions: {
-       ssl:'Amazon RDS'
-   },
-   pool: { maxConnections: 5, maxIdleTime: 30},
-   language: 'en'
+  host: 'practice-database-deploy.cht7atdafw8y.ap-northeast-2.rds.amazonaws.com',
+  port: 3306,
+  logging: console.log,
+  maxConcurrentQueries: 100,
+  dialect: 'mysql',
+  ssl:true,
+  timezone:"+09:00",
+  dialectOptions: {
+    ssl:'Amazon RDS',
+    charset: 'utf8mb4',
+    dateStrings: true,
+    typeCast: true
+  },
+  pool: { maxConnections: 5, maxIdleTime: 30},
+  language: 'en'
 })
 
 fs.readdirSync(__dirname)
