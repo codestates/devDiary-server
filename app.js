@@ -15,7 +15,11 @@ app.use(
 	session({
 		secret: "@devDiary",
 		resave: false,
-		saveUninitialized: true,
+		saveUninitialized: false,
+		cookie: {
+			httpOnly: true,
+			secure: false,
+		}
 	}),
 );
 
