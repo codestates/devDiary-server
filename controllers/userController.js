@@ -101,6 +101,7 @@ module.exports = {
 		if (!userinfo) {
 			res.status(422).send("not find user");
 		} else {
+      req.session.username=userinfo.username;
 			req.session.save(() => {
 				req.session.username = userinfo.username;
 				res.status(200).json({email:userinfo.email, username:userinfo.username});

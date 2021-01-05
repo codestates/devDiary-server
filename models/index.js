@@ -17,12 +17,12 @@ var sequelize = new Sequelize(process.env.DATABASE_NAME, process.env.DATABASE_US
   maxConcurrentQueries: 100,
   dialect: 'mysql',
   ssl:true,
-  // timezone:"+09:00",
+  timezone:"+09:00",
   dialectOptions: {
     ssl:'Amazon RDS',
-    // charset: 'utf8mb4',
-    // dateStrings: true,
-    // typeCast: true
+    charset: 'utf8mb4',
+    dateStrings: true,
+    typeCast: true
   },
   pool: { maxConnections: 5, maxIdleTime: 30},
   language: 'en'
